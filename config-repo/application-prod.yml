@@ -1,0 +1,34 @@
+# Production Environment Configuration
+spring:
+  profiles:
+    active: prod
+
+logging:
+  level:
+    root: WARN
+    com.spring5: INFO
+
+# Production Database (should use environment variables)
+spring:
+  r2dbc:
+    url: ${DB_URL:r2dbc:mysql://mysql:3306/movieBooking}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+  datasource:
+    url: ${DB_JDBC_URL:jdbc:mysql://mysql:3306/movieBooking?useSSL=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+
+# Production Settings
+production:
+  mock-payment: false
+  skip-email-verification: false
+  debug-mode: false
+  enable-ssl: true
+
+# Security
+security:
+  jwt:
+    secret: ${JWT_SECRET:change-this-in-production}
+    expiration: 86400000
+

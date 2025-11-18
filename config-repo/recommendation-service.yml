@@ -1,0 +1,30 @@
+# Recommendation Service Configuration
+spring:
+  application:
+    name: recommendation-service
+
+server:
+  port: 8083
+
+# Service URLs
+movie:
+  service:
+    url: http://movie-service:8081
+
+# Recommendation Algorithm Configuration
+recommendation:
+  algorithm:
+    collaborative-filtering:
+      enabled: true
+      min-users: 2
+    content-based:
+      enabled: true
+    hybrid:
+      enabled: true
+      collaborative-weight: 0.6
+      content-weight: 0.4
+  max-recommendations: 10
+  cache:
+    enabled: true
+    ttl-seconds: 3600
+

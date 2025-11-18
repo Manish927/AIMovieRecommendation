@@ -1,0 +1,25 @@
+# Ticket Booking Service Configuration
+spring:
+  application:
+    name: ticket-booking-service
+
+server:
+  port: 8085
+
+# Service URLs
+movie:
+  service:
+    url: http://movie-service:8081
+payment:
+  service:
+    url: http://payment-service:8082
+
+# Booking Configuration
+booking:
+  reservation:
+    expiry-minutes: 15
+  max-seats-per-booking: 10
+  cancellation:
+    allowed-hours-before-show: 2
+    refund-percentage: 0.8 # 80% refund
+

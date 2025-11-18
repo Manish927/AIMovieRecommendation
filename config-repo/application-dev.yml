@@ -1,0 +1,23 @@
+# Development Environment Configuration
+spring:
+  profiles:
+    active: dev
+
+logging:
+  level:
+    root: DEBUG
+    com.spring5: DEBUG
+
+# Development Database
+spring:
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/movieBooking_dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/movieBooking_dev?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+
+# Development Settings
+development:
+  mock-payment: true
+  skip-email-verification: true
+  debug-mode: true
+

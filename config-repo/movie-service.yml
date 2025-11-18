@@ -1,0 +1,49 @@
+# Movie Service Configuration
+spring:
+  application:
+    name: movie-service
+  
+  # R2DBC Configuration (can be overridden by environment)
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/movieBooking
+    username: root
+    password: root@123
+    pool:
+      initial-size: 5
+      max-size: 10
+  
+  # JDBC Configuration (for compatibility)
+  datasource:
+    url: jdbc:mysql://localhost:3306/movieBooking?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 8081
+
+# JWT Configuration
+jwt:
+  secret: your-secret-key-change-in-production
+  expiration: 86400000 # 24 hours in milliseconds
+
+# Email Configuration
+spring.mail:
+  host: smtp.gmail.com
+  port: 587
+  username: ${MAIL_USERNAME:}
+  password: ${MAIL_PASSWORD:}
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+
+# Tax Configuration
+tax:
+  gst:
+    rate: 0.18 # 18%
+  service-charge:
+    rate: 0.05 # 5%
+

@@ -1,0 +1,30 @@
+# Payment Service Configuration
+spring:
+  application:
+    name: payment-service
+
+server:
+  port: 8082
+
+# Service URLs
+movie:
+  service:
+    url: http://movie-service:8081
+
+# Payment Gateway Configuration
+payment:
+  gateway:
+    razorpay:
+      key-id: ${RAZORPAY_KEY_ID:}
+      key-secret: ${RAZORPAY_KEY_SECRET:}
+    stripe:
+      api-key: ${STRIPE_API_KEY:}
+    enabled: true
+    mock-mode: true # Set to false in production
+
+# Payment Processing
+payment:
+  processing:
+    timeout-seconds: 30
+    retry-attempts: 3
+

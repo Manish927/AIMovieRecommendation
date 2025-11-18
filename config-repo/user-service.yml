@@ -1,0 +1,31 @@
+# User Service Configuration
+spring:
+  application:
+    name: user-service
+
+server:
+  port: 8084
+
+# Service URLs
+movie:
+  service:
+    url: http://movie-service:8081
+
+# User Service Configuration
+user:
+  verification:
+    email:
+      enabled: true
+      token-expiry-hours: 24
+    phone:
+      enabled: true
+      code-expiry-minutes: 10
+  password:
+    reset:
+      token-expiry-hours: 1
+    min-length: 8
+    require-uppercase: true
+    require-lowercase: true
+    require-number: true
+    require-special-char: false
+
