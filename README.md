@@ -10,6 +10,8 @@ A full-stack **Movie Recommendation & Booking Platform** that combines **AI/ML a
 ## Overview
 This document describes the request flow between the Angular frontend and backend microservices with API Gateway and Load Balancing support.
 
+![CineBookPro Logo](CineBookPro.png)
+
 ## Architecture Diagram
 
 ```
