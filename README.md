@@ -12,75 +12,29 @@ This document describes the request flow between the Angular frontend and backen
 
 ![CineBookPro Logo](CineBookPro.png)
 
-## Architecture Diagram
+## Architecture Diagram 
 
+```mermaid
+flowchart TD
+    subgraph Frontend [FRONTEND (Angular)]
+        W[Welcome<br>Component]
+        ML[Movie List<br>Component]
+        B[Booking<br>Component]
+        HttpClient[HttpClient<br>(Angular)]
+        W --> HttpClient
+        ML --> HttpClient
+        B --> HttpClient
+    end
+
+    HttpClient -- HTTP Requests (All through Gateway) --> APIGW[API Gateway<br>:8081]
+
+    APIGW -.->|Gateway Routes<br/>/movies/**<br/>/api/recommendations/**<br/>/api/ticket-booking/**| LB[Load Balancer<br/>(Round-Robin)]
+    APIGW -- Direct --> MovieService1[Movie Service<br/>(Direct)]
+    LB -- Route --> MovieService[Movie Service<br/>(:8083)]
+    LB -- Route --> RecommendationService[Recommendation Service<br/>(:8083)]
+    LB -- Route --> TicketBookingService[Ticket Booking Service<br/>(:8085)]
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         FRONTEND (Angular)                      │
-│                      http://localhost:4200                      │
-│                                                                 │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
-│  │   Welcome    │  │ Movie List   │  │   Booking    │           │
-│  │  Component   │  │  Component   │  │  Component   │           │
-│  └──────────────┘  └──────────────┘  └──────────────┘           │
-│         │                 │                  │                  │
-│         └─────────────────┼──────────────────┘                  │
-│                           │                                     │
-│                  ┌────────▼────────┐                            │
-│                  │  HttpClient     │                            │
-│                  │  (Angular)      │                            │
-│                  └────────┬────────┘                            │
-└───────────────────────────┼─────────────────────────────────────┘
-                            │
-                            │ HTTP Requests (All through Gateway)
-                            │
-                  ┌─────────▼──────────┐
-                  │  Movie Service      │
-                  │  (API Gateway)      │
-                  │     :8081           │
-                  │                     │
-                  │  ┌────────────────┐│
-                  │  │ Gateway Routes ││
-                  │  │ - /movies/**   ││
-                  │  │ - /api/recommendations/**││
-                  │  │ - /api/ticket-booking/**││
-                  │  └────────────────┘│
-                  │                     │
-                  │  ┌────────────────┐│
-                  │  │ Load Balancer   ││
-                  │  │ (Round-Robin)   ││
-                  │  └────────────────┘│
-                  └─────────┬──────────┘
-                            │
-        ┌───────────────────┼───────────────────┐
-        │                   │                   │
-        │ Direct            │ Gateway           │ Gateway
-        │                   │                   │
-        ▼                   ▼                   ▼
-┌───────────────┐  ┌───────────────┐  ┌───────────────┐
-│ Movie Service │  │Recommendation │  │ Ticket Booking│
-│  (Direct)     │  │   Service     │  │   Service     │
-│               │  │    :8083      │  │    :8085      │
-│               │  │ [Instance 1]  │  │ [Instance 1]  │
-└───────┬───────┘  └───────┬───────┘  └───────┬───────┘
-        │                  │                  │
-        │                  │                  │
-        │                  │                  │
-        └──────────────────┼──────────────────┘
-                           │
-                           │ Internal HTTP Calls
-                           │
-                  ┌────────▼────────┐
-                  │  Movie Service  │
-                  │   (Backend)     │
-                  └────────┬────────┘
-                           │
-                           ▼
-                  ┌───────────────┐
-                  │ MySQL Database│
-                  │   :3306       │
-                  └───────────────┘
-```
+
 
 ## Request Flow Details
 
