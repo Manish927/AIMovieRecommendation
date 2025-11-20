@@ -14,25 +14,27 @@ This document describes the request flow between the Angular frontend and backen
 
 ## Architecture Diagram 
 
+
+
 ```mermaid
 flowchart TD
-    subgraph Frontend [FRONTEND (Angular)]
-        W[Welcome<br>Component]
-        ML[Movie List<br>Component]
-        B[Booking<br>Component]
-        HttpClient[HttpClient<br>(Angular)]
+    subgraph Frontend ["FRONTEND - Angular"]
+        W["Welcome<br>Component"]
+        ML["Movie List<br>Component"]
+        B["Booking<br>Component"]
+        HttpClient["HttpClient<br>Angular"]
         W --> HttpClient
         ML --> HttpClient
         B --> HttpClient
     end
 
-    HttpClient -- HTTP Requests (All through Gateway) --> APIGW[API Gateway<br>:8081]
+    HttpClient -- "HTTP Requests - All through Gateway" --> APIGW["API Gateway<br>:8081"]
 
-    APIGW -.->|Gateway Routes<br/>/movies/**<br/>/api/recommendations/**<br/>/api/ticket-booking/**| LB[Load Balancer<br/>(Round-Robin)]
-    APIGW -- Direct --> MovieService1[Movie Service<br/>(Direct)]
-    LB -- Route --> MovieService[Movie Service<br/>(:8083)]
-    LB -- Route --> RecommendationService[Recommendation Service<br/>(:8083)]
-    LB -- Route --> TicketBookingService[Ticket Booking Service<br/>(:8085)]
+    APIGW -.->|"Gateway Routes<br/>/movies/**<br/>/api/recommendations/**<br/>/api/ticket-booking/**"| LB["Load Balancer<br/>Round-Robin"]
+    APIGW -- Direct --> MovieService1["Movie Service<br/>Direct"]
+    LB -- Route --> MovieService["Movie Service<br/>:8083"]
+    LB -- Route --> RecommendationService["Recommendation Service<br/>:8083"]
+    LB -- Route --> TicketBookingService["Ticket Booking Service<br/>:8085"]
 ```
 
 
